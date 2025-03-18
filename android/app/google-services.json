@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "813320274906",
+    "project_id": "commitgrouptest",
+    "storage_bucket": "commitgrouptest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813320274906:android:9b5d83220ca107017a76e3",
+        "android_client_info": {
+          "package_name": "com.commitgrouptest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi7Lki8fMnLxllQFXU89Wc31zYARFdYN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

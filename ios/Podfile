@@ -16,12 +16,18 @@ end
 
 target 'CommitGroupTest' do
   config = use_native_modules!
-
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  pod 'Firebase/Core', :modular_headers => true
+    pod 'Firebase/Auth', :modular_headers => true
+    pod 'Firebase/Firestore', :modular_headers => true
+    pod 'Firebase/Messaging', :modular_headers => true
+    pod 'Firebase/Storage', :modular_headers => true
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
