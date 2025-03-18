@@ -1,11 +1,10 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   FlatList,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -19,6 +18,7 @@ import {useFetchOffers} from '../../hooks/useFetchOffers.ts';
 import {addRating} from '../../../api/ratings';
 import {updateOrderStatus} from '../../../api/orders';
 import {FeedBack} from '../../components/feedback';
+import {OffersData} from "../../components/offers/offersData.tsx";
 
 type OfferProps = NativeStackScreenProps<OfferListStackParamList, 'OfferList'>;
 
@@ -79,27 +79,23 @@ export const Offers: React.FC<OfferProps> = () => {
     <FlatList
       data={offers}
       keyExtractor={item => item.id}
-      renderItem={({item}) => {
-        const normalDate = item.date.toDate().toLocaleString();
+      renderItem={({item: {providerId, price, id, date, comment}}) => {
+        const normalDate = date.toDate().toLocaleString();
         return (
           <View style={styles.card}>
-            <Text
-              style={styles.offerText}>{`Provider - ${item.providerId}`}</Text>
-            <Text style={styles.offerText}>{`Price - ${item.price} $`}</Text>
-            <Text style={styles.offerText}>{`Date - ${normalDate}`}</Text>
-            <Text style={styles.offerText}>{`Comment - ${item.comment}`}</Text>
+            <OffersData providerId={providerId} price={price} normalDate={normalDate} comment={comment} />
             <Pressable
               style={styles.doneButton}
-              onPress={() => handleOpenRating(item.id!)}>
+              onPress={() => handleOpenRating(id)}>
               <Text style={styles.doneButtonText}>Виконано</Text>
             </Pressable>
-            {ratingOfferId === item.id && (
+            {ratingOfferId === id && (
               <FeedBack
                 stars={stars}
                 setStars={setStars}
                 ratingComment={ratingComment}
                 setRatingComment={setRatingComment}
-                onConfirm={() => handleConfirmRating(item.id)}
+                onConfirm={() => handleConfirmRating(id)}
               />
             )}
           </View>

@@ -9,11 +9,9 @@ import {getMedia, selectMedia} from '../../helpers/selectMedia';
 import {useAuth} from '../../context/authContext';
 import {OrderStatus} from '../../../types';
 import {addOrder} from '../../../api/orders';
-import firestore from "@react-native-firebase/firestore";
 
 export const Order: React.FC = () => {
   const {uid} = useAuth();
-  console.log(uid)
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const [description, setDescription] = useState<string>('');
@@ -30,8 +28,6 @@ export const Order: React.FC = () => {
     setCategory(selectedCategory);
     bottomSheetModalRef.current?.dismiss();
   };
-
-
 
   const uploadOrder = async () => {
     if (!mediaUri || !description || !category || !mediaType) {

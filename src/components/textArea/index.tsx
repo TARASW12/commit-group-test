@@ -1,7 +1,7 @@
-import {StyleSheet, TextInput} from 'react-native';
 import React from 'react';
+import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 
-interface InputProps {
+interface InputProps extends TextInputProps {
   value: string;
   placeholder?: string;
   onChangeText: (text: string) => void;
@@ -11,6 +11,7 @@ export const TextArea: React.FC<InputProps> = ({
   value,
   placeholder,
   onChangeText,
+  ...props
 }) => {
   return (
     <TextInput
@@ -20,9 +21,12 @@ export const TextArea: React.FC<InputProps> = ({
       multiline
       numberOfLines={4}
       style={styles.textArea}
+      accessibilityLabel="Text Area"
+      {...props}
     />
   );
 };
+
 const styles = StyleSheet.create({
   textArea: {
     height: 100,

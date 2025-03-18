@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, Text, TextInput, Pressable, StyleSheet} from 'react-native';
 
 interface RatingProps {
@@ -9,6 +9,9 @@ interface RatingProps {
   onConfirm: () => void;
 }
 
+const ACTIVE_STAR_COLOR = '#FFD700';
+const INACTIVE_STAR_COLOR = '#ccc';
+
 export const FeedBack: React.FC<RatingProps> = ({
   stars,
   setStars,
@@ -16,27 +19,39 @@ export const FeedBack: React.FC<RatingProps> = ({
   setRatingComment,
   onConfirm,
 }) => {
+  const starElements = useMemo(
+    () =>
+      Array.from({length: 5}).map((_, i) => (
+        <Text
+          key={i}
+          style={[
+            styles.star,
+            {color: i < stars ? ACTIVE_STAR_COLOR : INACTIVE_STAR_COLOR},
+          ]}
+          onPress={() => setStars(i + 1)}
+          accessibilityLabel={`Оцінка ${i + 1}`}
+          accessible>
+          ★
+        </Text>
+      )),
+    [stars, setStars],
+  );
+
   return (
     <View style={styles.ratingContainer}>
       <Text style={styles.ratingLabel}>Оцініть (1-5):</Text>
-      <View style={styles.starsContainer}>
-        {Array.from({length: 5}).map((_, i) => (
-          <Text
-            key={i}
-            style={[styles.star, {color: i < stars ? '#FFD700' : '#ccc'}]}
-            onPress={() => setStars(i + 1)}>
-            ★
-          </Text>
-        ))}
-      </View>
+      <View style={styles.starsContainer}>{starElements}</View>
       <TextInput
         style={styles.commentInput}
-        placeholder="Your Comment"
+        placeholder="Ваш коментар"
         value={ratingComment}
         onChangeText={setRatingComment}
         multiline
       />
-      <Pressable style={styles.confirmButton} onPress={onConfirm}>
+      <Pressable
+        style={styles.confirmButton}
+        onPress={onConfirm}
+        accessibilityRole="button">
         <Text style={styles.confirmButtonText}>Підтвердити</Text>
       </Pressable>
     </View>
@@ -59,17 +74,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 20,
   },
-  confirmButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#007AFF',
-    borderRadius: 4,
-    alignSelf: 'flex-end',
-  },
-  confirmButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
   star: {
     fontSize: 40,
     marginHorizontal: 5,
@@ -82,5 +86,16 @@ const styles = StyleSheet.create({
     height: 80,
     textAlignVertical: 'top',
     marginBottom: 10,
+  },
+  confirmButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#007AFF',
+    borderRadius: 4,
+    alignSelf: 'flex-end',
+  },
+  confirmButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

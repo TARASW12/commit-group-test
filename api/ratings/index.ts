@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import {RATINGS_COLLECTION} from "../collections";
 
 interface RatingData {
   orderId: string;
@@ -10,9 +11,7 @@ interface RatingData {
 
 export const addRating = async (ratingData: RatingData) => {
   try {
-    await firestore()
-      .collection('ratings')
-      .add(ratingData);
+    await firestore().collection(RATINGS_COLLECTION).add(ratingData);
     return true;
   } catch (error) {
     console.error('Error adding rating:', error);

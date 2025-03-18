@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import React, {useEffect} from 'react';
 import {Order, OrderStatus} from '../../types';
+import {ORDERS_COLLECTION} from "../../api/collections";
 
 interface useFetchClientOrdersProps {
   setMyOrders: React.Dispatch<React.SetStateAction<Order[]>>;
@@ -15,7 +16,7 @@ export const useFetchClientOrders = ({
     if (!uid) return;
 
     const unsubscribe = firestore()
-      .collection('orders')
+      .collection(ORDERS_COLLECTION)
       .where('userId', '==', uid)
       .onSnapshot(
         querySnapshot => {

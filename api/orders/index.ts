@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {OrderStatus} from '../../types';
+import {ORDERS_COLLECTION} from "../collections";
 
 export type OrderStatusType = (typeof OrderStatus)[keyof typeof OrderStatus];
 
@@ -14,18 +15,15 @@ export interface OrderData {
 
 export const addOrder = async (orderData: OrderData) => {
   return firestore()
-    .collection('orders')
-    .add({
-      ...orderData,
-      createdAt: firestore.FieldValue.serverTimestamp(),
-    });
+    .collection(ORDERS_COLLECTION)
+    .add(orderData);
 };
 export const updateOrderStatus = async (
   orderId: string,
   status: OrderStatusType,
 ) => {
   try {
-    await firestore().collection('orders').doc(orderId).update({
+    await firestore().collection(ORDERS_COLLECTION).doc(orderId).update({
       status,
     });
   } catch (error) {

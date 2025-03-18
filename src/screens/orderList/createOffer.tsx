@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
 import {useRoute, useNavigation, RouteProp} from '@react-navigation/native';
 import {OrderListStackParamList} from '../index';
 import {useAuth} from '../../context/authContext';

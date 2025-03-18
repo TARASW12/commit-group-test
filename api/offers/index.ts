@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import {OFFERS_COLLECTION, ORDERS_COLLECTION} from "../collections";
 
 interface OfferData {
   price: string;
@@ -14,11 +15,8 @@ interface AddOfferParams {
 
 export const addOfferToOrder = async ({orderId, offerData}: AddOfferParams) => {
   return firestore()
-    .collection('orders')
+    .collection(ORDERS_COLLECTION)
     .doc(orderId)
-    .collection('offers')
-    .add({
-      ...offerData,
-      createdAt: firestore.FieldValue.serverTimestamp(),
-    });
+    .collection(OFFERS_COLLECTION)
+    .add(offerData);
 };
